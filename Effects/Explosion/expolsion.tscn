@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dts14cy4si05"]
+
+[ext_resource type="Script" path="res://Effects/Explosion/expolsion.gd" id="1_m6se8"]
+[ext_resource type="AudioStream" uid="uid://cn7jyyjxl0yql" path="res://Sounds/172334__knova__grenade_knova.wav" id="2_vb1on"]
+
+[sub_resource type="Gradient" id="Gradient_oyyvu"]
+offsets = PackedFloat32Array(0, 0.491525, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0.86186, 0.571962, 8.03705e-07, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vamuy"]
+gradient = SubResource("Gradient_oyyvu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ujuf8"]
+emission_shape = 6
+emission_ring_axis = Vector3(1, 2.08165e-12, 2.08165e-12)
+emission_ring_height = 200.0
+emission_ring_radius = 200.0
+emission_ring_inner_radius = 0.0
+spread = 180.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+initial_velocity_min = 100.0
+initial_velocity_max = 250.0
+angular_velocity_min = 25.0
+angular_velocity_max = 25.0
+scale_min = 25.0
+scale_max = 50.0
+color_ramp = SubResource("GradientTexture1D_vamuy")
+
+[node name="Expolsion" type="GPUParticles2D"]
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_ujuf8")
+script = ExtResource("1_m6se8")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.9
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_vb1on")
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://1bdxytmapkf5"]
+
+[ext_resource type="Script" path="res://Enemy/Blob/blob.gd" id="1_wy50q"]
+[ext_resource type="PackedScene" uid="uid://7vqj8du347ke" path="res://Effects/Enemy Death/enemy_death.tscn" id="2_e1tdm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gc60n"]
+radius = 40.0
+
+[node name="Blob" type="CharacterBody2D"]
+process_mode = 1
+collision_layer = 4
+collision_mask = 13
+script = ExtResource("1_wy50q")
+death_effect = ExtResource("2_e1tdm")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-32, 24, -32, -8, -24, -16, -8, -24, 8, -24, 24, -16, 32, -8, 32, 24, 24, 32, -24, 32)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.686275, 0.537255, 0.454902, 1)
+polygon = PackedVector2Array(0, -24, -8, -24, -24, -16, -32, -8, -32, 0, -32, 24, -24, 32, 24, 32, 32, 24, 32, -8, 24, -16, 8, -24)
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_gc60n")
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
